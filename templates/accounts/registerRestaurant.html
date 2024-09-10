@@ -11,11 +11,11 @@
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 							<div class="user-dashboard loader-holder">
 								<div class="user-holder">
-                            <h4 class="text-center" style="margin-bottom: 0;">WELCOME TO FOODONLINE</h4>
-                            <p class="text-center">Please fill this form to get yourself onboarded in the foodOnline marketplace.</p>
+                            <h4 class="text-center" style="margin-bottom: 0;">PARTNER WITH FOODMART</h4>
+                            <p class="text-center">Reister Your Restaurant With Foodmart marketplace and get more customers.</p>
                             <hr>
                             <div id="restaurant-sets-holder">
-                                <form action = "{% url "registerUser"%}" class="form-fields-set foodbakery-dev-restaurant-form" method="POST" >
+                                <form action = "{% url "registerRestaurant"%}" class="form-fields-set foodbakery-dev-restaurant-form" method="post" enctype="multipart/form-data" >
                                     {% csrf_token %}
                                     <ul class="register-add-restaurant-tab-container restaurant-information-tab-container">
                                         <li>
@@ -26,14 +26,25 @@
                                                             <li>
                                                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                     <div class="field-holder">
-                                                                        <label>First name</label>{{form.first_name}}
+                                                                        <label>First Name</label>{{form.first_name}}
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                     <div class="field-holder">
-                                                                        <label>Last name</label>{{form.last_name}}
+                                                                        <label>Last Name</label>{{form.last_name}}
                                                                     </div>
                                                                 </div>
+                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="field-holder">
+                                                                        <label>Restaurant Name</label>{{r_form.restaurant_name}}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                                    <div class="field-holder">
+                                                                        <label>Restaurant license</label>{{r_form.restaurant_license}}
+                                                                    </div>
+                                                                </div>
+                                                               
                                                                
                                                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                                     <div class="field-holder">
