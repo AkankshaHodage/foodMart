@@ -2,14 +2,16 @@ from typing import Any
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
-class UserManager(BaseUserManager):
-    def create_user(self,first_name,last_name,username,email,password=None):#confirm_password=None
+class UserManager(BaseUserManager):  
+    def create_user(self,first_name,last_name,username,email,password=None,confirm_password=None):
         if not email:
             raise ValueError("User must have an email address")
         
         if not  username:
             raise ValueError("User must have an username address")
         
+     
+
         user=self.model(
         email = self.normalize_email(email),
         username = username,
@@ -17,11 +19,15 @@ class UserManager(BaseUserManager):
         last_name = last_name,
 
            ) 
+        #user.set_password(password)
+        #user.set_confirm_password(confirm_password)
+   
 
-        user.set_password(password)
+ 
         user.save(using=self._db)
         print("data saved in database")
         return user
+      
 
         """
         user.set_confirm_password(confirm_password)

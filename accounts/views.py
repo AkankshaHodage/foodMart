@@ -25,41 +25,54 @@ def check_role_customer(user):
 
 def registerUser(request):
     if request.user.is_authenticated:
-        messages.warning(request,"You are already logged in")
-        return redirect("myAccount")
-    
+            messages.warning(request,"You are already logged in")
+            return redirect("myAccount")
+        
 
     elif request.method == 'POST':
-       # print(request.POST)
-        #print('out')
+        # print(request.POST)
+            #print('out')
         form = UserForm (request.POST)
-        
+
+
         if form.is_valid():
             print("in if part")
             password = form.cleaned_data['password']
-            #confirm_password=form.cleaned_data['confirm_password']
+            
+            confirm_password=form.cleaned_data['confirm_password']
+            
             #form.save()
             user = form.save(commit = False)# before save it will check  allfileds are their or not
-            user.set_password(password)
-           # user.set_confirm_password(confirm_password)
             
-            user.role = User.CUSTOMER 
-            form.save()
-            messages.success(request,"Your account has been registered successfully.....!")
-            return redirect("registerUser")# to get the redirect here then in 1st line have to import redirect first then only it will redirect 
-            # registerUser is getting form the urls name=
+            user.set_password(password)
+            #user.set_confirm_password(confirm_password)
+            if (password==confirm_password):
+                #print("in if part")
+                user.role = User.CUSTOMER 
+                form.save()
+                messages.success(request,"Your account has been registered successfully.....!")
+                return redirect("registerUser")
+            else :
+                #print("wrong password")
+                messages.error(request,"Password and confirm_password have to be same try again........!")
+                
+
+                return redirect("registerUser")# to get the redirect here then in 1st line have to import redirect first then only it will redirect 
+                # registerUser is getting form the urls name=
+          
         else:
+            print("in else part")
             messages.error(request,"invalid form .......!")
             return redirect("registerUser")
-    else:
-        #if dont have POST method
-        print("in else part")
-        form = UserForm()
-    context={
-            'form':form,
+            
 
-        }
-  
+            #if dont have POST method
+    form = UserForm()
+    context={
+                'form':form,
+
+            }
+   
     return render(request,'accounts/registerUser.html',context)
 
 def registerRestaurant(request):
@@ -78,7 +91,8 @@ def registerRestaurant(request):
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            user=User.objects.create_user(first_name=first_name,last_name=last_name,username=username,email=email,password=password)
+           # confirm_password = form.cleaned_data['confirm_password']
+            user=User.objects.create_user(first_name=first_name,last_name=last_name,username=username,email=email,password=password)#,confirm_password=confirm_password)
             user.role = User.RESTAURANT
             user.save()
             restaurant = r_form.save(commit=False)
